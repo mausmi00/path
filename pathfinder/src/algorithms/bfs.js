@@ -10,6 +10,7 @@ function bfsHelp(grid, finish, visited, q) {
   while (q.length) {
     let t = q.shift();
     if(t.isWall) continue;
+    
     t.isVisited = true;
     visited.push(t);
     if (t === finish) return visited;
