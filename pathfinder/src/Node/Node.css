@@ -3,6 +3,7 @@
   height: 25px;
   outline: 1px solid grey;
   display: inline-block;
+  background-color: black;
 }
 
 .node-finish {
@@ -44,7 +45,7 @@
 }
 
 .node-wall {
-  background-color: rgb(12, 53, 71);
+  background-color: rgb(156, 157, 158);
 }
 
 .node-shortest-path {
