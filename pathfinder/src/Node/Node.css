@@ -22,6 +22,13 @@
   animation-fill-mode: forwards;
   animation-play-state: running;
 }
+.node-reset {
+    width: 25px;
+    height: 25px;
+    outline: 1px solid grey;
+    display: inline-block;
+    background-color: black;
+}
 @keyframes visitedAnimation {
   0% {
     transform: scale(0.3);

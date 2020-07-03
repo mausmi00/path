@@ -11,7 +11,6 @@ const START_NODE_ROW = 10;
 const START_NODE_COL = 15;
 const FINISH_NODE_ROW = 10;
 const FINISH_NODE_COL = 35;
-
 export default class PathFindingVisualizer extends Component {
   constructor() {
     super();
@@ -24,6 +23,7 @@ export default class PathFindingVisualizer extends Component {
     const grid = this.getInitialGrid();
     this.setState({ grid });
   }
+
   handleMouseDown(row, col) {
     const newGrid = this.getNewGridWithWallToggled(this.state.grid, row, col);
     this.setState({ grid: newGrid, mouseIsPressed: true });
@@ -60,6 +60,44 @@ export default class PathFindingVisualizer extends Component {
     return newGrid;
   };
 
+  clear() {
+    const grid = this.getInitialGrid();
+    this.setState({ grid });
+    grid.map((row, rowIdx) => {
+      return (
+        <div key={rowIdx}>
+          {row.map((node, nodeIdx) => {
+            const { row, col, isStart, isFinish, isWall, isVisited } = node;
+            console.log(isVisited);
+            document.getElementById(`node=${node.row}-${node.col}`).className =
+              "node node-reset";
+            if (row === START_NODE_ROW && col === START_NODE_COL) {
+              document.getElementById(
+                `node=${node.row}-${node.col}`
+              ).className = "node node-start";
+            }
+            if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) {
+              document.getElementById(
+                `node=${node.row}-${node.col}`
+              ).className = "node node-finish";
+            }
+            return (
+              <Node
+                key={nodeIdx}
+                isVisited={isVisited}
+                isStart={isStart}
+                isFinish={isFinish}
+                row={row}
+                col={col}
+                isWall={isWall}
+              ></Node>
+            );
+          })}
+        </div>
+      );
+    });
+  }
+
   createNode = (col, row) => {
     return {
       col,
@@ -78,7 +116,7 @@ export default class PathFindingVisualizer extends Component {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
+        }, 7 * i);
         return;
       }
       setTimeout(() => {
@@ -102,6 +140,7 @@ export default class PathFindingVisualizer extends Component {
 
   visualize(dijkstra, dfs, bfs) {
     //console.log("button clicked");
+    this.clear();
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -122,20 +161,32 @@ export default class PathFindingVisualizer extends Component {
 
     return (
       <>
-      <ul className="Toolbar">
-        <h4>PATHFINDNIG VISUALIZER</h4>
-        <button className = "button" onClick={() => this.visualize(dijkstra)}>
-          Visualize Dijkstra's Algorithm
-        </button>
-        <button className = "button" onClick={() => this.visualize(dfs)}>
-          Visualize DFS Algorithm
-        </button>
-        <button className = "button" onClick={() => this.visualize(bfs)}>
-          Visualize BFS Algorithm
-        </button>
-        <button className = "button" onClick={() => this.createNode()}>
-          clear board
-        </button>
+        <ul className="Toolbar">
+          <h4>PATHFINDNIG VISUALIZER</h4>
+          <button
+            className="button"
+            clickedAlgo="true"
+            onClick={() => this.visualize(dijkstra)}
+          >
+            Visualize Dijkstra's Algorithm
+          </button>
+          <button
+            className="button"
+            clickedAlgo="true"
+            onClick={() => this.visualize(dfs)}
+          >
+            Visualize DFS Algorithm
+          </button>
+          <button
+            className="button"
+            clickedAlgo="true"
+            onClick={() => this.visualize(bfs)}
+          >
+            Visualize BFS Algorithm
+          </button>
+          <button className="button" onClick={() => this.clear()}>
+            clear board
+          </button>
         </ul>
         <div className="grid">
           {grid.map((row, rowIdx) => {
