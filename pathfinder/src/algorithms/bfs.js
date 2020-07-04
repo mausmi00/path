@@ -22,5 +22,6 @@ function bfsHelp(grid, finish, visited, q) {
       q.push(neighbour);
     }
   }
+  return visited;
 
 }
