@@ -19,6 +19,7 @@ export default class PathFindingVisualizer extends Component {
       grid: [],
       mouseIsPressed: false,
       clear: true,
+      buttonClicked: false,
     };
   }
   componentDidMount() {
@@ -116,7 +117,6 @@ export default class PathFindingVisualizer extends Component {
         </div>
       );
     });
-    
   }
 
   // clearNodeWithoutClickingClearButton() {
@@ -199,7 +199,12 @@ export default class PathFindingVisualizer extends Component {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
+          if (i == visitedNodesInOrder.length) {
+            this.setState({ buttonClicked: false });
+            this.buttonsEnable();
+          }
         }, 9 * i);
+
         return;
       }
       setTimeout(() => {
@@ -221,18 +226,35 @@ export default class PathFindingVisualizer extends Component {
     }
   }
 
+  buttonsDisable() {
+    document.getElementById("bfsButton").className = "button button-disable";
+    document.getElementById("dfsButton").className = "button button-disable";
+    document.getElementById("clearButton").className = "button button-disable";
+    document.getElementById("dijButton").className = "button button-disable";
+  }
+  buttonsEnable() {
+    document.getElementById("bfsButton").className = "button";
+    document.getElementById("dfsButton").className = "button ";
+    document.getElementById("clearButton").className = "button";
+    document.getElementById("dijButton").className = "button";
+  }
   visualize(dijkstra, dfs, bfs) {
     //console.log("button clicked");
+
+    if (this.state.buttonClicked) {
+      return;
+    }
+
     const { clear } = this.state;
     if (!clear) {
-      window.alert("YOU NEED TO FIRST CLEAR THE BUTTON");
+      window.alert("YOU NEED TO FIRST CLEAR THE BOARD");
       this.clear();
     }
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     let visitedNodesInOrder = null;
-   
+
     if (clear) {
       if (dijkstra) {
         visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
@@ -243,8 +265,9 @@ export default class PathFindingVisualizer extends Component {
       }
       const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
       this.animate(visitedNodesInOrder, nodesInShortestPathOrder);
-
       this.setState({ clear: false });
+      this.setState({ buttonClicked: true });
+      this.buttonsDisable();
     }
   }
 
@@ -255,16 +278,35 @@ export default class PathFindingVisualizer extends Component {
       <>
         <ul className="Toolbar">
           <h4>PATHFINDNIG VISUALIZER</h4>
-          <button id = "alogButton" className="button" onClick={() => this.visualize(dijkstra)}>
+          <button
+            id="dijButton"
+            className="button"
+            onClick={() => this.visualize(dijkstra)}
+            buttonClicked={this.state.buttonClicked}
+          >
             Visualize Dijkstra's Algorithm
           </button>
-          <button id = "alogButton" className="button" onClick={() => this.visualize(dfs)}>
+          <button
+            id="dfsButton"
+            className="button"
+            onClick={() => this.visualize(dfs)}
+            buttonClicked={this.state.buttonClicked}
+          >
             Visualize DFS Algorithm
           </button>
-          <button id = "alogButton" className="button" onClick={() => this.visualize(bfs)}>
+          <button
+            id="bfsButton"
+            className="button"
+            onClick={() => this.visualize(bfs)}
+            buttonClicked={this.state.buttonClicked}
+          >
             Visualize BFS Algorithm
           </button>
-          <button className="button" onClick={() => this.clear()}>
+          <button
+            id="clearButton"
+            className="button"
+            onClick={() => this.clear()}
+          >
             clear board
           </button>
         </ul>
@@ -307,3 +349,5 @@ export default class PathFindingVisualizer extends Component {
     );
   }
 }
+//Disable the rest of the buttons when one algo is inprogress so that the code does'nt act weird
+//Then we could enable the button once the prevoius algo is complete
