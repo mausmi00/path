@@ -4,13 +4,19 @@
   outline: 1px solid grey;
   display: inline-block;
   background-color: black;
+
+}
+.node-animation {
+    pointer-events: none;
 }
 
 .node-finish {
   background-color: red;
+  pointer-events: none;
 }
 .node-start {
   background-color: green;
+  pointer-events: none;
 }
 .node-visited {
   animation-name: visitedAnimation;
@@ -21,6 +27,8 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+  pointer-events: none;
+
 }
 .node-reset {
     width: 25px;
@@ -64,6 +72,7 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+  pointer-events: none;
 }
 
 @keyframes shortestPath {

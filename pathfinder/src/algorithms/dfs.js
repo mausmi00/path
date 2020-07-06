@@ -1,7 +1,8 @@
-import {getUnvisitedNeighbours} from "./commonMethods"
+import {getUnvisitedNeighbours, getAllNodes} from "./commonMethods"
 export function dfs(grid, start, finish) {
   const visited = [];
   const stack = [];
+  getAllNodes(grid, start, finish);
   stack.push(start);
   return dfsHelp(grid, finish, visited, stack);
 }

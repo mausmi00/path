@@ -1,8 +1,8 @@
-import {getUnvisitedNeighbours} from "./commonMethods"
+import {getUnvisitedNeighbours, getAllNodes} from "./commonMethods"
 export function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
   startNode.distance = 0;
-  const unvisitedNodes = getAllNodes(grid);
+  const unvisitedNodes = getAllNodes(grid,  startNode, finishNode);
   while (!!unvisitedNodes.length) {
     sortNodesByDistance(unvisitedNodes);
     const closestNode = unvisitedNodes.shift();
@@ -24,14 +24,4 @@ function updateUnvisitedNeighbours(node, grid) {
     neighbour.distance = node.distance + 1;
     neighbour.previousNode = node;
   }
-}
-
-function getAllNodes(grid) {
-  const nodes = [];
-  for (const row of grid) {
-    for (const node of row) {
-      nodes.push(node);
-    }
-  }
-  return nodes;
 }

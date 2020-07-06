@@ -1,7 +1,8 @@
-import {getUnvisitedNeighbours} from "./commonMethods"
+import { getUnvisitedNeighbours, getAllNodes } from "./commonMethods";
 export function bfs(grid, start, finish) {
   const visited = [];
   let q = [];
+  getAllNodes(grid, start, finish);
   q.push(start);
   return bfsHelp(grid, finish, visited, q);
 }
@@ -23,5 +24,4 @@ function bfsHelp(grid, finish, visited, q) {
     }
   }
   return visited;
-
 }

@@ -349,5 +349,5 @@ export default class PathFindingVisualizer extends Component {
     );
   }
 }
-//Disable the rest of the buttons when one algo is inprogress so that the code does'nt act weird
-//Then we could enable the button once the prevoius algo is complete
+//Disable addition of walls when code is running
+//Walls placement
