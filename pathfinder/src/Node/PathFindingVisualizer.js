@@ -29,30 +29,21 @@ export default class PathFindingVisualizer extends Component {
 
   handleMouseDown(row, col) {
     const newGrid = this.getNewGridWithWallToggled(this.state.grid, row, col);
-    this.setState({ grid: newGrid, mouseIsPressed: false });
+    this.setState({ grid: newGrid, mouseIsPressed: true });
   }
 
   handleMouseEnter(row, col) {
     if (!this.state.mouseIsPressed) return;
-    const newGrid = this.getNewGridWithWallToggled(this.state.grid, row, col);
+    const newGrid = this.getNewGridWithWallToggledMouseUp(
+      this.state.grid,
+      row,
+      col
+    );
     this.setState({ grid: newGrid });
   }
   handleMouseUp() {
     this.setState({ mouseIsPressed: false });
   }
-
-  // getClearGridWithWalls = () => {
-  //   const grid = [];
-  //   for (let row = 0; row < 20; row++) {
-  //     const currentRow = [];
-  //     for (let col = 0; col < 50; col++) {
-  //       currentRow.push(this.createNodeWithoutClickingClearButton(col, row));
-  //     }
-  //     grid.push(currentRow);
-  //   }
-  //   return grid;
-  // };
-
   getInitialGrid = () => {
     const grid = [];
     for (let row = 0; row < 20; row++) {
@@ -74,6 +65,16 @@ export default class PathFindingVisualizer extends Component {
     newGrid[row][col] = newNode;
     return newGrid;
   };
+  getNewGridWithWallToggledMouseUp = (grid, row, col) => {
+    const newGrid = grid.slice();
+    const node = newGrid[row][col];
+    const newNode = {
+      ...node,
+      isWall: true,
+    };
+    newGrid[row][col] = newNode;
+    return newGrid;
+  };
 
   clear() {
     const grid = this.getInitialGrid();
@@ -89,7 +90,6 @@ export default class PathFindingVisualizer extends Component {
         <div key={rowIdx}>
           {row.map((node, nodeIdx) => {
             const { row, col, isStart, isFinish, isVisited, isWall } = node;
-            console.log(isVisited);
             document.getElementById(`node=${node.row}-${node.col}`).className =
               "node node-reset";
             if (row === START_NODE_ROW && col === START_NODE_COL) {
@@ -119,68 +119,6 @@ export default class PathFindingVisualizer extends Component {
     });
   }
 
-  // clearNodeWithoutClickingClearButton() {
-  //   const grid = this.getClearGridWithWalls();
-  //   this.setState({ grid });
-  //   grid.map((row, rowIdx) => {
-  //     return (
-  //       <div key={rowIdx}>
-  //         {row.map((node, nodeIdx) => {
-  //           const { row, col, isStart, isFinish, isVisited, isWall } = node;
-
-  //           if (!node.isWall) {
-  //             document.getElementById(
-  //               `node=${node.row}-${node.col}`
-  //             ).className = "node node-reset";
-  //           }
-
-  //           if (node.isWall) {
-  //             document.getElementById(
-  //               `node=${node.row}-${node.col}`
-  //             ).className = "node node-wall";
-  //           }
-
-  //           if (row === START_NODE_ROW && col === START_NODE_COL) {
-  //             document.getElementById(
-  //               `node=${node.row}-${node.col}`
-  //             ).className = "node node-start";
-  //           }
-
-  //           if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) {
-  //             document.getElementById(
-  //               `node=${node.row}-${node.col}`
-  //             ).className = "node node-finish";
-  //           }
-  //           return (
-  //             <Node
-  //               key={nodeIdx}
-  //               isVisited={isVisited}
-  //               isStart={isStart}
-  //               isFinish={isFinish}
-  //               row={row}
-  //               col={col}
-  //               isWall={isWall}
-  //             ></Node>
-  //           );
-  //         })}
-  //       </div>
-  //     );
-  //   });
-  // }
-
-  // createNodeWithoutClickingClearButton = (col, row) => {
-  //   return {
-  //     col,
-  //     row,
-  //     isStart: row === START_NODE_ROW && col === START_NODE_COL,
-  //     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-  //     distance: Infinity,
-  //     isVisited: false,
-  //     previousNode: null,
-  //     isWall: false,
-  //   };
-  // };
-
   createNode = (col, row) => {
     return {
       col,
@@ -209,9 +147,10 @@ export default class PathFindingVisualizer extends Component {
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
-        document.getElementById(`node=${node.row}-${node.col}`).className =
-          "node node-visited";
-        //  this.setState({ grid: newGrid });
+        if (!node.isStart && !node.isFinish) {
+          document.getElementById(`node=${node.row}-${node.col}`).className =
+            "node node-visited";
+        }
       }, 8 * i);
     }
   }
@@ -219,9 +158,10 @@ export default class PathFindingVisualizer extends Component {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
-        document.getElementById(`node=${node.row}-${node.col}`).className =
-          "node node-shortest-path";
-        //  this.setState({ grid: newGrid });
+        if (!node.isStart && !node.isFinish) {
+          document.getElementById(`node=${node.row}-${node.col}`).className =
+            "node node-shortest-path";
+        }
       }, i);
     }
   }
@@ -239,8 +179,6 @@ export default class PathFindingVisualizer extends Component {
     document.getElementById("dijButton").className = "button";
   }
   visualize(dijkstra, dfs, bfs) {
-    //console.log("button clicked");
-
     if (this.state.buttonClicked) {
       return;
     }
@@ -338,6 +276,7 @@ export default class PathFindingVisualizer extends Component {
                       onMouseEnter={(row, col) =>
                         this.handleMouseEnter(row, col)
                       }
+                      // onClick={(row,col) => this.handleMouseClick(row,col)}
                     ></Node>
                   );
                 })}
@@ -349,5 +288,3 @@ export default class PathFindingVisualizer extends Component {
     );
   }
 }
-//Disable addition of walls when code is running
-//Walls placement
