@@ -13,7 +13,6 @@ export default class Node extends Component {
       onMouseDown,
       onMouseUp,
       onMouseEnter,
-      isVisited
     } = this.props;
     const extraClassName = isFinish
       ? "node-finish"

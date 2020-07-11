@@ -23,7 +23,7 @@ export function getAllNodes(grid, startNode, finishNode) {
   const nodes = [];
   for (const row of grid) {
     for (const node of row) {
-      if (node != startNode && node != finishNode && !node.isWall) {
+      if (node !== startNode && node !== finishNode && !node.isWall) {
         document.getElementById(`node=${node.row}-${node.col}`).className =
           "node node-animation";
       }

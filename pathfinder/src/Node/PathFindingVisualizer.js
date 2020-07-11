@@ -138,7 +138,7 @@ export default class PathFindingVisualizer extends Component {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
-          if (i == visitedNodesInOrder.length) {
+          if (i === visitedNodesInOrder.length) {
             this.setState({ buttonClicked: false });
             this.buttonsEnable();
           }
@@ -228,9 +228,8 @@ export default class PathFindingVisualizer extends Component {
     return (
       <>
         <ul className="Toolbar">
-          <h4>PATHFINDNIG VISUALIZER</h4>
+          <h4>PATHFINDING VISUALIZER</h4>
           <button
-            class="button"
             id="dijButton"
             className="button"
             onClick={() => this.visualize(dijkstra)}
@@ -239,7 +238,6 @@ export default class PathFindingVisualizer extends Component {
             Visualize Dijkstra's Algorithm
           </button>
           <button
-            class="button"
             id="dfsButton"
             className="button"
             onClick={() => this.visualize(dfs)}
@@ -248,7 +246,6 @@ export default class PathFindingVisualizer extends Component {
             Visualize DFS Algorithm
           </button>
           <button
-            class="button"
             id="bfsButton"
             className="button"
             onClick={() => this.visualize(bfs)}
@@ -264,10 +261,10 @@ export default class PathFindingVisualizer extends Component {
             clear board
           </button>
         </ul>
-        <div class="modal">
-          <div class="modal-content">
+        <div className="modal">
+          <div className="modal-content">
             <h1>This is going to clear the board!!</h1>
-            <span class="close-button">Okay</span>
+            <span className="close-button">Okay</span>
           </div>
         </div>
 
@@ -299,7 +296,6 @@ export default class PathFindingVisualizer extends Component {
                       onMouseEnter={(row, col) =>
                         this.handleMouseEnter(row, col)
                       }
-                      // onClick={(row,col) => this.handleMouseClick(row,col)}
                     ></Node>
                   );
                 })}

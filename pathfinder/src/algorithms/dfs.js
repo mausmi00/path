@@ -13,7 +13,7 @@ function dfsHelp(grid, finish, visited, stack) {
     if (current.isWall) continue;
     visited.push(current);
     current.isVisited = true;
-    if (current == finish) return visited;
+    if (current === finish) return visited;
     const neighbours = getUnvisitedNeighbours(current, grid);
     for (const neighbour of neighbours) {
       neighbour.previousNode = current;
