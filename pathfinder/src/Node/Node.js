@@ -23,6 +23,7 @@ export default class Node extends Component {
       ? "node-wall"
       : "";
     return (
+      
       <div
         id={`node=${row}-${col}`}
         className={`node ${extraClassName}`}

@@ -4,6 +4,7 @@
   outline: 1px solid grey;
   display: inline-block;
   background-color: black;
+  z-index:500;
 
 }
 .node-animation {
@@ -14,11 +15,10 @@
   background-color:rgb(236, 130, 236);
   pointer-events: none;
 }
+
 .node-start {
-background-color: rgb(236, 130, 236);
+  background-color:rgb(236, 130, 236);
   pointer-events: none;
-
-
 }
 .node-visited {
   animation-name: visitedAnimation;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Node from "./Node";
 
 import "./PathFindingVisualizer.css";
+import "./Modal.css";
 import { dijkstra } from "../algorithms/dijkstra";
 import { dfs } from "../algorithms/dfs";
 import { bfs } from "../algorithms/bfs";
@@ -20,6 +21,7 @@ export default class PathFindingVisualizer extends Component {
       mouseIsPressed: false,
       clear: true,
       buttonClicked: false,
+  
     };
   }
   componentDidMount() {
@@ -183,9 +185,13 @@ export default class PathFindingVisualizer extends Component {
       return;
     }
 
-    const { clear } = this.state;
+    const { clear, isModal } = this.state;
     if (!clear) {
-      window.alert("YOU NEED TO FIRST CLEAR THE BOARD");
+    
+    document.getElementById("modal").className = "modal-content";
+    
+      // window.alert("YOU NEED TO FIRST CLEAR THE BOARD");
+
       this.clear();
     }
     const { grid } = this.state;
@@ -207,6 +213,9 @@ export default class PathFindingVisualizer extends Component {
       this.setState({ buttonClicked: true });
       this.buttonsDisable();
     }
+  }
+  closeModal() {
+    document.getElementById("modal").className = "modal";
   }
 
   render() {
@@ -248,6 +257,17 @@ export default class PathFindingVisualizer extends Component {
             clear board
           </button>
         </ul>
+      
+        <div 
+        id="modal"
+        className = "modal">
+          <span 
+          class="close"
+          onClick={()=>this.closeModal()}
+          >&times;</span>
+          <p>BLABLABLABALA</p>
+        </div>
+
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (
