@@ -21,7 +21,6 @@ export default class PathFindingVisualizer extends Component {
       mouseIsPressed: false,
       clear: true,
       buttonClicked: false,
-  
     };
   }
   componentDidMount() {
@@ -181,19 +180,24 @@ export default class PathFindingVisualizer extends Component {
     document.getElementById("dijButton").className = "button";
   }
   visualize(dijkstra, dfs, bfs) {
+    const { clear } = this.state;
     if (this.state.buttonClicked) {
       return;
     }
+    function toggleModal() {
+      modal.classList.toggle("show-modal");
 
-    const { clear, isModal } = this.state;
+      closeButton.removeEventListener("click", toggleModal);
+    }
     if (!clear) {
-    
-    document.getElementById("modal").className = "modal-content";
-    
+      var modal = document.querySelector(".modal");
+      var closeButton = document.querySelector(".close-button");
+      toggleModal();
+      closeButton.addEventListener("click", toggleModal);
       // window.alert("YOU NEED TO FIRST CLEAR THE BOARD");
-
       this.clear();
     }
+
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -226,6 +230,7 @@ export default class PathFindingVisualizer extends Component {
         <ul className="Toolbar">
           <h4>PATHFINDNIG VISUALIZER</h4>
           <button
+            class="button"
             id="dijButton"
             className="button"
             onClick={() => this.visualize(dijkstra)}
@@ -234,6 +239,7 @@ export default class PathFindingVisualizer extends Component {
             Visualize Dijkstra's Algorithm
           </button>
           <button
+            class="button"
             id="dfsButton"
             className="button"
             onClick={() => this.visualize(dfs)}
@@ -242,6 +248,7 @@ export default class PathFindingVisualizer extends Component {
             Visualize DFS Algorithm
           </button>
           <button
+            class="button"
             id="bfsButton"
             className="button"
             onClick={() => this.visualize(bfs)}
@@ -257,15 +264,11 @@ export default class PathFindingVisualizer extends Component {
             clear board
           </button>
         </ul>
-      
-        <div 
-        id="modal"
-        className = "modal">
-          <span 
-          class="close"
-          onClick={()=>this.closeModal()}
-          >&times;</span>
-          <p>BLABLABLABALA</p>
+        <div class="modal">
+          <div class="modal-content">
+            <h1>This is going to clear the board!!</h1>
+            <span class="close-button">Okay</span>
+          </div>
         </div>
 
         <div className="grid">
