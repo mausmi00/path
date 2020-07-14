@@ -26,8 +26,18 @@ export default class PathFindingVisualizer extends Component {
   componentDidMount() {
     const grid = this.getInitialGrid();
     this.setState({ grid });
+    var welcome = document.querySelector(".welcome");
+    var closeButton = document.querySelector(".close-button2");
+    function toggleModal() {
+      welcome.classList.toggle("show-modal");  
+      closeButton.removeEventListener("click", toggleModal);     
+    }  
+    toggleModal();
+    closeButton.addEventListener("click", toggleModal);
   }
 
+
+  
   handleMouseDown(row, col) {
     const newGrid = this.getNewGridWithWallToggled(this.state.grid, row, col);
     this.setState({ grid: newGrid, mouseIsPressed: true });
@@ -246,6 +256,7 @@ export default class PathFindingVisualizer extends Component {
             Visualize DFS Algorithm
           </button>
           <button
+          
             id="bfsButton"
             className="button"
             onClick={() => this.visualize(bfs)}
@@ -264,7 +275,15 @@ export default class PathFindingVisualizer extends Component {
         <div className="modal">
           <div className="modal-content">
             <h1>This is going to clear the board!!</h1>
-            <span className="close-button">Okay</span>
+            <span className ="close-button">Okay</span>
+          </div>
+        </div>
+        <div className="welcome">
+          <div className="modal-content">
+
+            <h2 className = "title">Welcome to Pathfinding Visualizer!!</h2>
+            <h3>Click and drag to place walls</h3>
+            <span className ="close-button2">Start</span>
           </div>
         </div>
 
