@@ -8,8 +8,6 @@ import { dfs } from "../algorithms/dfs";
 import { bfs } from "../algorithms/bfs";
 import { getNodesInShortestPathOrder } from "../algorithms/commonMethods";
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
 const FINISH_NODE_ROW = 10;
 const FINISH_NODE_COL = 35;
 
@@ -21,6 +19,9 @@ export default class PathFindingVisualizer extends Component {
       mouseIsPressed: false,
       clear: true,
       buttonClicked: false,
+      mouseIsPressedOnMain: false,
+      startRow: 10,
+      startCol: 10,
     };
   }
   componentDidMount() {
@@ -29,18 +30,36 @@ export default class PathFindingVisualizer extends Component {
     var welcome = document.querySelector(".welcome");
     var closeButton = document.querySelector(".close-button2");
     function toggleModal() {
-      welcome.classList.toggle("show-modal");  
-      closeButton.removeEventListener("click", toggleModal);     
-    }  
+      welcome.classList.toggle("show-modal");
+      closeButton.removeEventListener("click", toggleModal);
+    }
     toggleModal();
     closeButton.addEventListener("click", toggleModal);
   }
 
+  handleMouseDown(row, col, startRow, startCol) {
+    document.getElementById(`node=${row}-${col}`).className = "node node-reset";
 
-  
-  handleMouseDown(row, col) {
-    const newGrid = this.getNewGridWithWallToggled(this.state.grid, row, col);
-    this.setState({ grid: newGrid, mouseIsPressed: true });
+    if (row == startRow && col == startCol) {
+      const { grid } = this.state;
+      let newGrid = grid.slice();
+      const node = newGrid[this.state.startRow][this.state.startCol];
+      const newNode = {
+        ...node,
+        isStart: false,
+      };
+      newGrid[this.state.startRow][this.state.startCol] = newNode;
+
+      this.setState({
+        grid: newGrid,
+      });
+
+      newGrid = this.getNewGridWithMainNode(this.state.grid, row, col);
+      this.setState({ grid: newGrid, mouseIsPressedOnMain: true });
+    } else {
+      const newGrid = this.getNewGridWithWallToggled(this.state.grid, row, col);
+      this.setState({ grid: newGrid, mouseIsPressed: true });
+    }
   }
 
   handleMouseEnter(row, col) {
@@ -52,8 +71,43 @@ export default class PathFindingVisualizer extends Component {
     );
     this.setState({ grid: newGrid });
   }
+
+  handleMouseMove(row, col) {
+    if (!this.state.mouseIsPressedOnMain) return;
+    const { grid } = this.state;
+    let newGrid = grid.slice();
+    const node = newGrid[this.state.startRow][this.state.startCol];
+   
+      let newNode = {
+        ...node,
+        isStart: false,
+      };
+      newGrid[this.state.startRow][this.state.startCol] = newNode;
+    
+
+    newGrid = this.getNewGridWithMaindMouseUp(this.state.grid, row, col);
+    this.setState({ grid: newGrid });
+  }
+
   handleMouseUp() {
-    this.setState({ mouseIsPressed: false });
+    document.getElementById(
+      `node=${this.state.startRow}-${this.state.startCol}`
+    ).className = "node node-start";
+
+    const { grid } = this.state;
+    const newGrid = grid.slice();
+    const node = newGrid[this.state.startRow][this.state.startCol];
+    const newNode = {
+      ...node,
+      isStart: true,
+    };
+    newGrid[this.state.startRow][this.state.startCol] = newNode;
+
+    this.setState({
+      grid: newGrid,
+      mouseIsPressed: false,
+      mouseIsPressedOnMain: false,
+    });
   }
   getInitialGrid = () => {
     const grid = [];
@@ -76,6 +130,35 @@ export default class PathFindingVisualizer extends Component {
     newGrid[row][col] = newNode;
     return newGrid;
   };
+  getNewGridWithMainNode = (grid, row, col) => {
+    const newGrid = grid.slice();
+
+    const node = newGrid[row][col];
+    const newNode = {
+      ...node,
+      startRow: row,
+      startCol: col,
+      isStart: true,
+    };
+    this.setState({ startRow: row, startCol: col });
+    newGrid[row][col] = newNode;
+    return newGrid;
+  };
+
+  getNewGridWithMaindMouseUp = (grid, row, col) => {
+    const newGrid = grid.slice();
+    const node = newGrid[row][col];
+    const newNode = {
+      ...node,
+      startRow: row,
+      startCol: col,
+      isStart: true,
+    };
+    this.setState({ startRow: row, startCol: col });
+    newGrid[row][col] = newNode;
+    return newGrid;
+  };
+
   getNewGridWithWallToggledMouseUp = (grid, row, col) => {
     const newGrid = grid.slice();
     const node = newGrid[row][col];
@@ -100,10 +183,19 @@ export default class PathFindingVisualizer extends Component {
       return (
         <div key={rowIdx}>
           {row.map((node, nodeIdx) => {
-            const { row, col, isStart, isFinish, isVisited, isWall } = node;
+            const {
+              row,
+              col,
+              isStart,
+              isFinish,
+              isVisited,
+              isWall,
+              startRow,
+              startCol,
+            } = node;
             document.getElementById(`node=${node.row}-${node.col}`).className =
               "node node-reset";
-            if (row === START_NODE_ROW && col === START_NODE_COL) {
+            if (row === startRow && col === startCol) {
               document.getElementById(
                 `node=${node.row}-${node.col}`
               ).className = "node node-start";
@@ -134,7 +226,9 @@ export default class PathFindingVisualizer extends Component {
     return {
       col,
       row,
-      isStart: row === START_NODE_ROW && col === START_NODE_COL,
+      startRow: 10,
+      startCol: 10,
+      isStart: row === 10 && col === 10,
       isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
       distance: Infinity,
       isVisited: false,
@@ -208,8 +302,8 @@ export default class PathFindingVisualizer extends Component {
       this.clear();
     }
 
-    const { grid } = this.state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const { grid, startCol, startRow } = this.state;
+    const startNode = grid[startRow][startCol];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     let visitedNodesInOrder = null;
 
@@ -256,7 +350,6 @@ export default class PathFindingVisualizer extends Component {
             Visualize DFS Algorithm
           </button>
           <button
-          
             id="bfsButton"
             className="button"
             onClick={() => this.visualize(bfs)}
@@ -275,15 +368,14 @@ export default class PathFindingVisualizer extends Component {
         <div className="modal">
           <div className="modal-content">
             <h1>This is going to clear the board!!</h1>
-            <span className ="close-button">Okay</span>
+            <span className="close-button">Okay</span>
           </div>
         </div>
         <div className="welcome">
-          <div className="modal-content">
-
-            <h2 className = "title">Welcome to Pathfinding Visualizer!!</h2>
+          <div className="modal-content welcome-content">
+            <h2 className="title">Welcome to Pathfinding Visualizer!!</h2>
             <h3>Click and drag to place walls</h3>
-            <span className ="close-button2">Start</span>
+            <span className="close-button2">Start</span>
           </div>
         </div>
 
@@ -299,6 +391,8 @@ export default class PathFindingVisualizer extends Component {
                     isFinish,
                     isWall,
                     isVisited,
+                    startCol,
+                    startRow,
                   } = node;
                   return (
                     <Node
@@ -311,10 +405,13 @@ export default class PathFindingVisualizer extends Component {
                       col={col}
                       isWall={isWall}
                       onMouseUp={() => this.handleMouseUp()}
-                      onMouseDown={(row, col) => this.handleMouseDown(row, col)}
+                      onMouseDown={(row, col) =>
+                        this.handleMouseDown(row, col, startRow, startCol)
+                      }
                       onMouseEnter={(row, col) =>
                         this.handleMouseEnter(row, col)
                       }
+                      onMouseMove={(row, col) => this.handleMouseMove(row, col)}
                     ></Node>
                   );
                 })}

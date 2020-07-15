@@ -31,8 +31,11 @@
   padding: 1rem 1.5rem;
   width: 24rem;
   border-radius: 0.5rem;
-  border: 2px dashed;
 }
+.welcome-content {
+
+    border: 2px dashed;
+  }
 .close-button {
   float: right;
   width: 5rem;
