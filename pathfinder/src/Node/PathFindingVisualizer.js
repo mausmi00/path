@@ -386,38 +386,54 @@ export default class PathFindingVisualizer extends Component {
     return (
       <>
         <ul className="Toolbar">
-          <h4>PATHFINDING VISUALIZER</h4>
-          <button
-            id="dijButton"
-            className="button"
-            onClick={() => this.visualize(dijkstra)}
-            buttonClicked={this.state.buttonClicked}
-          >
-            Visualize Dijkstra's Algorithm
-          </button>
-          <button
-            id="dfsButton"
-            className="button"
-            onClick={() => this.visualize(dfs)}
-            buttonClicked={this.state.buttonClicked}
-          >
-            Visualize DFS Algorithm
-          </button>
-          <button
-            id="bfsButton"
-            className="button"
-            onClick={() => this.visualize(bfs)}
-            buttonClicked={this.state.buttonClicked}
-          >
-            Visualize BFS Algorithm
-          </button>
-          <button
-            id="clearButton"
-            className="button"
-            onClick={() => this.clear()}
-          >
-            clear board
-          </button>
+          <h4 className="welcome-title">PATHFINDING VISUALIZER</h4>
+          <div className="sub-toolbar">
+            <div className="toolbar1">
+              <button
+                id="dijButton"
+                className="button"
+                onClick={() => this.visualize(dijkstra)}
+                buttonClicked={this.state.buttonClicked}
+              >
+                Visualize Dijkstra's Algorithm
+              </button>
+              <button
+                id="dfsButton"
+                className="button"
+                onClick={() => this.visualize(dfs)}
+                buttonClicked={this.state.buttonClicked}
+              >
+                Visualize DFS Algorithm
+              </button>
+              <button
+                id="bfsButton"
+                className="button"
+                onClick={() => this.visualize(bfs)}
+                buttonClicked={this.state.buttonClicked}
+              >
+                Visualize BFS Algorithm
+              </button>
+              <button
+                id="clearButton"
+                className="button"
+                onClick={() => this.clear()}
+              >
+                clear board
+              </button>
+            </div>
+            <div className="toolbar2">
+              <li className="Node node-start" />
+              <li className="text"> Start Node </li>
+              <li className="Node node-finish" />
+              <li className="text"> Finish Node </li>
+              <li className="Node visitedNode" />
+              <li className="text"> Visited Node </li>
+              <li className="Node ShortestPathNode" />
+              <li className="text"> Shortest-path Node </li>
+              <li className="Node node-wall" />
+              <li className="text"> Wall Node </li>
+            </div>
+          </div>
         </ul>
         <div className="modal">
           <div className="modal-content">

@@ -3,20 +3,66 @@
   margin-left: 0px;
 }
 .Toolbar {
-  height: 70px;
+  height: 110px;
   width: 100%;
   position: auto;
   top: 0;
   left: 0;
   padding-top: 0%;
+  padding: 0 20px;
   background-color: #d4b2e4;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
   box-sizing: border-box;
   margin-top: 0px;
   margin-bottom: 0px;
+}
+.sub-toolbar {
+  padding-top: 30px;
+  flex-direction: column;
+  padding-left: 30px;
+}
+.toolbar1 {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar2 {
+  display: flex;
+  flex-direction: row;
+  padding-left: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.welcome-title {
+  width: 18%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border-style: outset;
+  background-color: rgb(189, 234, 241);
+  box-shadow: 2px 2px rgb(223, 240, 243);
+}
+.Node {
+  list-style-type: none;
+  width: 5px;
+  height: 5px;
+  outline: 1px solid rgb(255, 255, 255);
+}
+.text {
+  font-size: medium;
+  list-style-type: none;
+  left: 0;
+  text-align: left;
+  padding-right: 50px;
+}
+
+.visitedNode {
+  background-color: #d4b2e4;
+}
+.ShortestPathNode {
+  background-color: rgb(255, 254, 106);
 }
 
 .button {
@@ -37,20 +83,18 @@
   background-color: #cccccc;
   color: #666666;
   pointer-events: none;
-
 }
-
 
 li {
   list-style-type: none;
+  padding-right: 200px;
 }
 .alert {
   padding: 20px;
-  background-color: #f44336; 
+  background-color: #f44336;
   color: white;
   margin-bottom: 15px;
 }
-
 
 .closebtn {
   margin-left: 15px;
@@ -62,7 +106,6 @@ li {
   cursor: pointer;
   transition: 0.3s;
 }
-
 
 .closebtn:hover {
   color: black;
