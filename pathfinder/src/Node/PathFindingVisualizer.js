@@ -15,7 +15,7 @@ export default class PathFindingVisualizer extends Component {
       grid: [],
       mouseIsPressed: false,
       clear: true,
-      buttonClicked: false,
+      buttonclicked: "false",
       mouseIsPressedOnStart: false,
       mouseIsPressedOnFinish: false,
       startRow: 10,
@@ -297,7 +297,7 @@ export default class PathFindingVisualizer extends Component {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
           if (i === visitedNodesInOrder.length) {
-            this.setState({ buttonClicked: false });
+            this.setState({ buttonclicked: "false" });
             this.buttonsEnable();
           }
         }, 9 * i);
@@ -339,7 +339,7 @@ export default class PathFindingVisualizer extends Component {
   }
   visualize(dijkstra, dfs, bfs) {
     const { clear } = this.state;
-    if (this.state.buttonClicked) {
+    if (this.state.buttonclicked === "true") {
       return;
     }
     function toggleModal() {
@@ -372,7 +372,7 @@ export default class PathFindingVisualizer extends Component {
       const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
       this.animate(visitedNodesInOrder, nodesInShortestPathOrder);
       this.setState({ clear: false });
-      this.setState({ buttonClicked: true });
+      this.setState({ buttonclicked: "true" });
       this.buttonsDisable();
     }
   }
@@ -393,7 +393,7 @@ export default class PathFindingVisualizer extends Component {
                 id="dijButton"
                 className="button"
                 onClick={() => this.visualize(dijkstra)}
-                buttonClicked={this.state.buttonClicked}
+                buttonclicked={this.state.buttonclicked}
               >
                 Visualize Dijkstra's Algorithm
               </button>
@@ -401,7 +401,7 @@ export default class PathFindingVisualizer extends Component {
                 id="dfsButton"
                 className="button"
                 onClick={() => this.visualize(dfs)}
-                buttonClicked={this.state.buttonClicked}
+                buttonclicked={this.state.buttonclicked}
               >
                 Visualize DFS Algorithm
               </button>
@@ -409,7 +409,7 @@ export default class PathFindingVisualizer extends Component {
                 id="bfsButton"
                 className="button"
                 onClick={() => this.visualize(bfs)}
-                buttonClicked={this.state.buttonClicked}
+                buttonclicked={this.state.buttonclicked}
               >
                 Visualize BFS Algorithm
               </button>
