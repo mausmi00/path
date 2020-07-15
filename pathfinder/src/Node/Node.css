@@ -4,20 +4,17 @@
   outline: 1px solid rgb(255, 255, 255);
   display: inline-block;
   background-color: rgb(189, 234, 241);
-
-
 }
 .node-animation {
-    pointer-events: none;
-}
-
-.node-finish {
-  background-color:rgb(250, 0, 21);
   pointer-events: none;
 }
 
+.node-finish {
+  background-color: rgb(250, 0, 21);
+}
+
 .node-start {
-  background-color:rgb(120, 231, 163);
+  background-color: rgb(120, 231, 163);
 }
 .node-visited {
   animation-name: visitedAnimation;
@@ -29,7 +26,6 @@
   animation-fill-mode: forwards;
   animation-play-state: running;
   pointer-events: none;
-
 }
 .node-reset {
   width: 25px;
@@ -56,7 +52,7 @@
 
   100% {
     transform: scale(1);
-    background-color: #d4b2e4
+    background-color: #d4b2e4;
   }
 }
 
