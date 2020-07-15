@@ -11,17 +11,27 @@
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
 .welcome {
-    position: fixed;   
-    top: 0;
-    width: 100%;   
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    visibility: hidden;
-  }
-  .title {
-    width: 100%;
-    border: 2px solid #0a0c0a;
-  }
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+}
+.title {
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 4px solid #444644;
+}
+
+li {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+    text-align: left;
+    list-style-type: circle;
+}
 .modal-content {
   position: absolute;
   top: 50%;
@@ -33,9 +43,10 @@
   border-radius: 0.5rem;
 }
 .welcome-content {
-
-    border: 2px dashed;
-  }
+  width: 30rem;
+  height: 20rem;
+  border: 2px dashed;
+}
 .close-button {
   float: right;
   width: 5rem;
@@ -47,15 +58,15 @@
   background-color: lightgray;
 }
 .close-button2 {
-    float: right;
-    width: 5rem;
-    line-height: 2rem;
-    text-align: center;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 0.25rem;
-    background-color: lightgray;
-  }
+  padding: 15px 50px 15px 50px;
+ 
+  line-height: 2.5rem;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 0.25rem;
+  background-color: lightgray;
+}
 
 .close-button:hover {
   background-color: darkgray;

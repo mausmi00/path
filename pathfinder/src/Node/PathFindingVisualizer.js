@@ -421,14 +421,17 @@ export default class PathFindingVisualizer extends Component {
         </ul>
         <div className="modal">
           <div className="modal-content">
-            <h1>This is going to clear the board!!</h1>
+            <h1>This is going to clear the grid!!</h1>
             <span className="close-button">Okay</span>
           </div>
         </div>
         <div className="welcome">
           <div className="modal-content welcome-content">
             <h2 className="title">Welcome to Pathfinding Visualizer!!</h2>
-            <h3>Click and drag to place walls</h3>
+            <ul>
+              <li>Click on the grid to add walls</li>
+              <li>Click and drag on start and target nodes to move them</li>
+            </ul>
             <span className="close-button2">Start</span>
           </div>
         </div>
