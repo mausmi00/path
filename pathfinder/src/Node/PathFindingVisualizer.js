@@ -247,18 +247,22 @@ export default class PathFindingVisualizer extends Component {
       return (
         <div key={rowIdx}>
           {row.map((node, nodeIdx) => {
-            const { row, col, isStart, isFinish, isVisited, isWall } = node;
+            
             document.getElementById(`node=${node.row}-${node.col}`).className =
               "node node-reset";
-
+            
+            const { row, col, isStart, isFinish, isVisited, isWall } = node;
+              if(node.isStart) {
             document.getElementById(
               `node=${this.state.startRow}-${this.state.startCol}`
             ).className = "node node-start";
-
+            }
+            else if(node.isFinish) {
             document.getElementById(
               `node=${this.state.finishRow}-${this.state.finishCol}`
             ).className = "node node-finish";
-
+            }
+           
             return (
               <Node
                 key={nodeIdx}
@@ -280,10 +284,8 @@ export default class PathFindingVisualizer extends Component {
     return {
       col,
       row,
-      startRow: 10,
-      startCol: 10,
-      isStart: row === 10 && col === 10,
-      isFinish: row === 10 && col === 35,
+      isStart: row === this.state.startRow && col === this.state.startCol,
+      isFinish: row === this.state.finishRow && col === this.state.finishCol,
       distance: Infinity,
       isVisited: false,
       isWall: false,
